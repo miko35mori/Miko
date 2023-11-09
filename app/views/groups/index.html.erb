@@ -1,0 +1,31 @@
+<h1>団体</h1>
+<h3>一覧ページ</h3>
+<%= link_to "新規投稿へ", new_group_path %>
+<div class="groups-container">
+  <% @groups.each do |t| %>
+    <%= image_tag t.image_url, size: "250x200" if t.image? %>
+    <div class="group">
+      <%= t.group_name %>
+      <%= t.address %>
+      <%= t.scale %>
+      <%= t.animal %>
+      <%= t.about %>
+      <%= link_to "詳細へ", group_path(t.id) %>
+
+      <% if user_signed_in? %>
+      <% if current_user.already_favorited?(t) %>
+          <%= link_to group_favorite_path(id: t.id, group_id: t.id), method: :delete do %>
+            <i class="far fa-heart"></i><%= t.favorites.count %>
+          <% end %>
+      <% else %>
+          <%= link_to group_favorites_path(id: t.id, group_id: t.id), method: :post do %>
+            <i class="far fa-heart"></i><%= t.favorites.count %>
+          <% end %>
+      <% end %>
+
+  <% else %>
+  <i class="far fa-heart"></i><%= t.favorites.count %>
+  <% end %>
+    </div>
+  <% end %>
+</div>

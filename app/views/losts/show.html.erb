@@ -1,0 +1,51 @@
+<h1>迷子の動物たち</h1>
+<h3>Lost詳細</h3>
+<div class="lost">
+<p><%= @lost.animal_name %></p>
+<p><%= @lost.created_at %></p>
+    <% if user_signed_in? %>
+      <% if current_user.already_liked?(@lost) %>
+        <%= link_to lost_like_path(@lost), method: :delete do %>
+            <i class="fas fa-heart"></i><%= @lost.likes.count %>
+          <p>いいねを取り消す</p><%= @lost.likes.count %>
+        <% end %>
+      <% else %>
+        <%= link_to lost_likes_path(@lost), method: :post do %>
+            <i class="far fa-heart"></i><%= @lost.likes.count %>
+          <p>いいね</p><%= @lost.likes.count %>
+        <% end %>
+      <% end %>
+    <% else %>
+    <i class="far fa-heart"></i><%= @lost.likes.count %>
+      <p>いいねの数 = </p><%= @lost.likes.count %>
+    <% end %>
+  <%= link_to "編集する", edit_lost_path(@lost.id) %>
+</div>
+
+<h2>いいねしたユーザー</h2>
+<% @lost.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+
+<%= link_to "Lost一覧に戻る", losts_path %>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@lost, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

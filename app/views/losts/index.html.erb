@@ -1,0 +1,30 @@
+<h1>どうぶつ</h1>
+<h3>一覧ページ</h3>
+<%= link_to "新規投稿へ", new_lost_path %>
+<div class="losts-container">
+  <% @losts.each do |t| %>
+    <div class="lost">
+    <%= image_tag t.image_url, size: "250x200" if t.image? %>
+      <%= t.animal_name %>
+      <%= t.genre %>
+      <%= t.color %>
+      <%= t.about %>
+      <%= link_to "詳細へ", lost_path(t.id) %>
+
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to lost_like_path(id: t.id, lost_id: t.id), method: :delete do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+              <p>いいねを取り消す</p><%= t.likes.count %>
+          <% end %>
+      <% else %>
+          <%= link_to lost_likes_path(id: t.id, lost_id: t.id), method: :post do %>
+            <i class="far fa-heart"></i><%= t.likes.count %>
+              <p>いいね</p><%= t.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+      <p>いいねの数 = </p><%= t.likes.count %>
+  <% end %>
+    </div>
+ <% end %>
