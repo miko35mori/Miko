@@ -1,7 +1,5 @@
 class LostsController < ApplicationController
     before_action :authenticate_user!, only: [:new, :create]
-    def top
-    end
     def index
         @losts = Lost.all
       end
@@ -39,13 +37,8 @@ class LostsController < ApplicationController
         end
       end
     
-      # 追加ここから
-      def destroy
-        lost = Lost.find(params[:id])
-        lost.destroy
-        redirect_to action: :index
+      def top
       end
-      # ここまで
     
       private
       def lost_params

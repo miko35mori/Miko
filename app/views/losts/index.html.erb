@@ -1,30 +1,184 @@
-<h1>どうぶつ</h1>
-<h3>一覧ページ</h3>
-<%= link_to "新規投稿へ", new_lost_path %>
-<div class="losts-container">
-  <% @losts.each do |t| %>
-    <div class="lost">
-    <%= image_tag t.image_url, size: "250x200" if t.image? %>
-      <%= t.animal_name %>
-      <%= t.genre %>
-      <%= t.color %>
-      <%= t.about %>
-      <%= link_to "詳細へ", lost_path(t.id) %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>迷子の動物 一覧ページ</title>
+  <style>
+    body {
+      font-family: 'Limelight', sans-serif;
+      background-color: #EEF9FF;
+      color: #665635;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-      <% if user_signed_in? %>
-      <% if current_user.already_liked?(t) %>
-          <%= link_to lost_like_path(id: t.id, lost_id: t.id), method: :delete do %>
-            <i class="fas fa-heart"></i><%= t.likes.count %>
-              <p>いいねを取り消す</p><%= t.likes.count %>
+    header {
+      background-color: #C6E6F0;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    
+  
+    h3 {
+      text-align: center;
+      font-weight: normal;
+      margin-bottom: 10px;
+    }
+
+
+    .title-container h1 {
+      text-align: center;
+    }
+      
+
+    .title-container {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 10px auto 0;
+    align-items: center;
+    width: 500px;
+    z-index: 1000; /* 適切な値に設定してください */
+  }
+
+
+
+  h1 {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-size: 1.65em;
+    font-weight: bold;
+    text-align: center;
+    color: #665635;
+    margin-left: 10px;
+  }
+
+    .losts-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .lost {
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      margin: 10px;
+    }
+  
+    .lost img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    
+    .lost h4 {
+     margin: 0px; /* または適切な値に調整 */
+     }
+
+     .lost p {
+      margin:10px;
+     }
+
+    .lost-link {
+      text-decoration: none;
+      color: #665635; /* 適切な色に調整 */
+      margin-left: 150px;
+    }
+  
+    .lost-link:hover {
+      color: #B89C9C /* ホバー時の色 */
+      
+    }
+
+    .add-event {
+      display: inline-block;
+      width: 30%;
+      padding: 10px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+      background-color: #F2D7D9;
+      color: #665635;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-left: 170px;
+    }
+
+    .add-event:hover {
+      color: #B89C9C /* ホバー時の色 */
+    }
+
+    .lost img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .likes-count {
+      margin-left: 5px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-" crossorigin="anonymous" />
+
+</head>
+<body>
+<br>
+<br>
+  <div class="title-container">
+    <h1>✦　迷子の動物 一覧ページ　✦</h1>
+    <h4><%= link_to "新規投稿へ", new_lost_path, class: 'add-event' %><h4>
+  </div>
+
+  
+  <div class="losts-container">
+    <% @losts.each_with_index do |t, index| %>
+      <% colors = ['#DDEEAA', '#DDDDFF', '#FCECEA', '#FFFFDD'] %>
+      <% color_index = index % colors.length %>
+      <div class="lost" style="background-color: <%= colors[color_index] %>;">
+        <%= image_tag t.image_url, size: "250x200" %>
+        <h4><p><%= t.animal_name %><p></h4>
+        <p>種類：<%= t.genre %></p>
+        <p>色・模様<%= t.color %></p>
+        <p>コメント：<%= t.about %></p>
+        <%= link_to "詳細へ", lost_path(t.id), class: 'lost-link' %>
+
+        <% if user_signed_in? %>
+          <% if current_user.already_liked?(t) %>
+            <%= link_to lost_like_path(id: t.id, lost_id: t.id), method: :delete do %>
+              <i class="far fa-heart"></i>
+              <span class="likes-count"><%= t.likes.count %></span>
+            <% end %>
+          <% else %>
+            <%= link_to lost_comments_path(id: t.id, lost_id: t.id), method: :post do %>
+              <i class="far fa-heart"></i>
+              <span class="likes-count"><%= t.likes.count %></span>
+            <% end %>
           <% end %>
-      <% else %>
-          <%= link_to lost_likes_path(id: t.id, lost_id: t.id), method: :post do %>
-            <i class="far fa-heart"></i><%= t.likes.count %>
-              <p>いいね</p><%= t.likes.count %>
-          <% end %>
-      <% end %>
-  <% else %>
-      <p>いいねの数 = </p><%= t.likes.count %>
-  <% end %>
-    </div>
- <% end %>
+        <% else %>
+          <i class="far fa-heart"></i>
+          <span class="likes-count"><%= t.likes.count %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+</body>
+</html>

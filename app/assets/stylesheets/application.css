@@ -1,52 +1,117 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
 
- * {
-    padding: 0;
-    margin: 0;
-  }
-  body {
-    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
-      Meiryo, "ＭＳ Ｐゴシック", sans-serif;
-  }
-  header {
-    background-color: #00acee;
-    height: 80px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  header a {
-    color: white; 
-    text-decoration: none; 
-  }
-  header h1 {
-    color: white;
-    margin-left: 20px;
-  }
-  .header-list {
-    display: flex;
-    align-items: center;
-  }
-  header ul {
-    display: flex;
-  }
-  header li {
-    list-style: none;
-    margin-right: 40px;
-  }
+body {
+  font-family: "Limelight", "Noto Sans JP", "メイリオ", Meiryo, "MS Pゴシック", sans-serif;
+  color: #665635;
+}
 
+.overlay-text {
+  position: absolute;
+  top: 100px;
+  left: 110px;
+  color: #665635;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  text-shadow: 2px 2px 4px rgba(198, 230, 240, 0.7);
+  z-index: 2;
+}
+
+
+.concept_title {
+  color: #665635;
+  display: inline-block;
+  margin-right: 145px;
+  align-items: center;
+  display: inline-block;
+}
+
+.icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #FEF0D6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.icon img {
+  max-width: 100%; /* 変更: 画像の最大幅を100%に設定 */
+  max-height: 100%; /* 変更: 画像の最大高さを100%に設定 */
+}
+
+.icon p {
+  margin: 0;
+  margin-top: 5px;
+}
+
+/* 変更: h1 imgのセレクタ修正 */
+header h1 img {
+  margin-left: 50px;
+  margin-right: 0px;
+  max-height: 80px;
+  max-width: 100%;
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+  background-color: #C6E6F0;
+  height: 500px;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #665635;
+  text-decoration: none;
+}
+
+header h2 {
+  color: #665635;
+  font-family: 'Limelight', sans-serif;
+  font-size: 37px;
+  align-items: left;
+}
+
+header h4 {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  margin-right: 20px;
+}
+
+nav a:last-child {
+  margin-right: 0;
+  color: #665635;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav li:nth-child(3) {
+  margin-right: 40px;
+}

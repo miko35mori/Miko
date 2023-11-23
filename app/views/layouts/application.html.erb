@@ -1,33 +1,94 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Animal</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <script src="https://kit.fontawesome.com/9aeec2b718.js"  crossorigin="anonymous"></script> 
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<html lang="en">
+<head>
+  <title>Animal Foop</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <style>
+    body {
+      font-family: "Limelight", "Noto Sans JP", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+      background-color: #EEF9FF;
+      margin: 0;
+    }
   
-  </head>
+    header {
+      background-color: #C6E6F0;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
 
-  <body>
+    h1 {
+      font-family: 'Limelight', cursive;
+      color: #665635;
+      margin: 0;
+      align-items: center; /* 中央揃えにする */
+    }
+
+    h2 {
+      color: #665635;
+      font-family: 'Limelight', sans-serif;
+      font-size: 37px;
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    nav li {
+      margin-right: 20px;
+      width: 120px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #665635;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
   <header>
-   <h1>Animal</h1>
-   <div class="header-list">
-    <ul>
-     <% if user_signed_in? %>
-      <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
-     <% else %>
-      <li><%= link_to "新規登録", new_user_registration_path %></li>
-      <li><%= link_to "ログイン", new_user_session_path %></li>
-     <% end %>
-    </ul>
-   </div>
+    <h1>
+      <%= image_tag 'Animalfoop_logo.png', alt: 'Company Logo' %>
+      <h2>Animal Foop</h2>
+    </h1>
+    <nav>
+      <ul>
+        <li><%= link_to "Home", losts_top_path %></li>
+        <li><%= link_to "Animals",losts_path %></li>
+        <li><%= link_to "Organization", groups_path %></li>
+        <li><%= link_to "Events",blogs_path %></li>
+        <% if user_signed_in? %>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to "Sign Up", new_user_registration_path %></li>
+          <li><%= link_to "Log In", new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </nav>
   </header>
+
   <main>
-   <%= yield %>
+    <%= yield %>
   </main>
- </body>
+
+</body>
 </html>

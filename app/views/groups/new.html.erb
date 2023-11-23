@@ -1,52 +1,178 @@
-<h1>(自分の題名)</h1>
-<h3>新規投稿ページ</h3>
-<%= form_for @group do |f| %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新規投稿 - 動物愛護団体</title>
+  <style>
+    body {
+      font-family: 'Limelight', sans-serif;
+      background-color: #EEF9FF;
+      color: #665635;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-# データ型がstringで自由記述の入力フォーム
-  <div class="field">
-    <%= f.label :group_name %>
-    <%= f.text_field :group_name, :size => 30 %>
-  </div>
+        header {
+      background-color: #C6E6F0;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
 
-# データ型がstringで選択式の入力フォーム
-  <div class="field">
-    <%= f.label :address  %>
-    <%= f.select :address, 
-    [["A", "A"], 
-    ["B", "B"], 
-    ["C", "C"]], include_blank: "選択して下さい" %>
-  </div>
 
-# データ型がstringで選択式の入力フォーム
-  <div class="field">
-    <%= f.label :animal  %>
-    <%= f.select :animal, 
-    [["A", "A"], 
-    ["B", "B"], 
-    ["C", "C"]], include_blank: "選択して下さい" %>
-  </div>
+    .post-container {
+      background-color: #FCECEA;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 700px;
+      margin-top: 20px;
+      z-index: 0;
+      margin: auto;
+    }
 
-  # データ型がstringで選択式の入力フォーム
-  <div class="field">
-    <%= f.label :scale  %>
-    <%= f.select :scale, 
-    [["A", "A"], 
-    ["B", "B"], 
-    ["C", "C"]], include_blank: "選択して下さい" %>
-  </div>
+    h3 {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
 
-  # データ型がtextで自由記述の入力フォーム
-  <div class="field">
-    <%= f.label :about  %>
-    <%= f.text_area :about, :size => "30x2" %>
-  </div>
+    .post-container h1 {
+      text-align: center;
+      font-size: 1.8em;
+      color: #665635;
+      margin: 0; /* マージンを0に設定 */
+      display: block; /* デフォルトのブロック要素として設定 */
+      width: 100%; /* 幅を100%に設定 */
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .container {
+      display: flex;
+      margin-right: 10px;
+      align-items: baseline;
+      color:  #665635;
+      margin-bottom: 10px; /* 各コンテナの下に余白を追加 */
+    }
+
+    .box {
+      margin-top: 20px;
+    }
+
+    .field {
+      margin-top: 8px;
+    }
+
+    .container > span {
+      width: 50%;
+      margin-left: 10px;
+      font_color: #665635
+      padding-right: 10px;
+      text-align: flex;
+      display: inline-block; /* インラインブロックに変更 */
+    }
+
+    input[type="text"],
+    select,
+    textarea,
+    input[type="file"],
+    input[type="submit"] {
+      width: 70%;
+      padding: 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+    }
+
+    .group-link {
+      text-decoration: none;
+      color: #665635; /* 適切な色に調整 */
+      margin-left: 20px;
+    }
   
-  <div class="field">
-  <%= f.label :image %>
-  <%= f.file_field :image %>
-</div>
+    .group-link:hover {
+      color: #B89C9C /* ホバー時の色 */
+    }
 
-  <%= f.submit "投稿する" %>
-<% end %>
 
-<%= link_to "一覧に戻る", groups_path %>
+    input[type="submit"] {
+      background-color:  #DBB0B0;
+      width: 70%;
+      padding: 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      margin-left: 70px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #F2D7D9;
+    }
+
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #665635;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<br>
+<br>
+<body>
+  <div class="post-container">
+   <h1>動物愛護団体</h1>
+    <h3>新規投稿</h3>
+
+    <%= form_for @group do |f| %>
+      <div class="container">
+        <span>◀ 動物愛護団体</span> <%= f.text_field :group_name, :size => 30, :id => "group_name" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 活動場所</span> <%= f.text_field :address, :size => 30, :id => "address" %>
+      </div>
+
+      <div class="container">
+      <span>◀ 動物の種類</span> <%= f.select :animal, [["イヌ", "イヌ"], ["ネコ", "ネコ"], ["鳥類", "鳥類"], ["うさぎ", "うさぎ"], ["カメ", "カメ"]], include_blank: "選択して下さい", :id => "animal" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 規模</span> <%= f.select :scale, [["1~10", "1~10"], ["11~20", "11~20"], ["20~50", "20~50"], ["50~100", "50~100"], ["100~", "100~"]], include_blank: "選択して下さい", :id => "scale" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 活動概要</span> <%= f.text_field :about, :size => 30, :id => "about" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 画像イメージ</span> <%= f.file_field :image, :id => "about"%>
+      </div>
+
+      <%= f.submit "投稿する" %>
+    <% end %>
+
+    <%= link_to "動物愛護団体TOPに戻る", groups_path,  class: 'group-link' %>
+    </div>
+  </div>
+
+</body>
+</html>

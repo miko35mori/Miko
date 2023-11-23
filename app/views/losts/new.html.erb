@@ -1,37 +1,171 @@
-<h1>迷子の動物たち</h1>
-<h3>新規投稿ページ</h3>
-<div class="post-container">
-<%= form_for @lost do |f| %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新規投稿 - 迷子の動物たち</title>
+  <style>
+    body {
+      font-family: 'Limelight', sans-serif;
+      background-color: #EEF9FF;
+      color: #665635;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-  <div class="field">
-    <%= f.label :animal_name %>
-    <%= f.text_field :animal_name, :size => 30 %>
+
+    header {
+      background-color: #C6E6F0;
+      padding: 10px 0;
+      text-align: center;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+
+    .post-container {
+      background-color: #FCECEA;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 700px;
+      margin-top: 20px;
+      z-index: 0;
+      margin: auto;
+    }
+
+    h3 {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    .post-container h1 {
+      text-align: center;
+      font-size: 1.8em;
+      color: #665635;
+      margin: 0; /* マージンを0に設定 */
+      display: block; /* デフォルトのブロック要素として設定 */
+      width: 100%; /* 幅を100%に設定 */
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .container {
+      display: flex;
+      margin-right: 10px;
+      align-items: baseline;
+      color:  #665635;
+      margin-bottom: 10px; /* 各コンテナの下に余白を追加 */
+    }
+
+    .box {
+      margin-top: 20px;
+    }
+
+    .field {
+      margin-top: 8px;
+    }
+
+    .container > span {
+      width: 50%;
+      margin-left: 10px;
+      font_color: #665635
+      padding-right: 10px;
+      text-align: flex;
+      display: inline-block; /* インラインブロックに変更 */
+    }
+    
+    .lost-link {
+      text-decoration: none;
+      color: #665635; /* 適切な色に調整 */
+      margin-left: 20px;
+    }
+  
+    .lost-link:hover {
+      color: #B89C9C /* ホバー時の色 */
+    }
+
+    input[type="text"],
+    select,
+    textarea,
+    input[type="file"] {
+      width: 70%;
+      padding: 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+      border-radius: 4px;  
+    }
+
+    input[type="submit"] {
+      background-color:  #DBB0B0;
+      width: 70%;
+      padding: 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      margin-left: 70px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #F2D7D9;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #665635;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<br>
+<br>
+<body>
+  <div class="post-container">
+   <h1>迷子の動物たち</h1>
+    <h3>新規投稿</h3>
+
+    <%= form_for @lost do |f| %>
+      <div class="container">
+        <span>◀ 動物の名前</span> <%= f.text_field :animal_name, :size => 30, :id => "animal_name" %>
+      </div>
+
+      <div class="container">
+      <span>◀ 動物の種類</span> <%= f.select :genre, [["イヌ", "イヌ"], ["ネコ", "ネコ"], ["鳥類", "鳥類"],  ["ウサギ", "ウサギ"],  ["爬虫類", "爬虫類"], ["その他", "その他"]], include_blank: "選択して下さい", :id => "genre" %>
+    </div>
+
+      <div class="container">
+        <span>◀ 色・模様</span> <%= f.text_field :color, :size => 30, :id => "color" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 詳細コメント</span> <%= f.text_field :about, :size => 30, :id => "about" %>
+      </div>
+
+      <div class="container">
+        <span>◀ 画像イメージ</span> <%= f.file_field :image, :id => "image"%>
+      </div>
+
+      <%= f.submit "投稿する" %>
+    <% end %>
+
+    <%= link_to "迷子の動物TOPに戻る", losts_path,  class: 'lost-link' %>
   </div>
 
-  <div class="field">
-    <%= f.label :genre  %>
-    <%= f.select :genre, 
-    [["A", "A"], 
-    ["B", "B"], 
-    ["C", "C"]], include_blank: "選択して下さい" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :color  %>
-    <%= f.number_field :color, :size => 10 %>
-  </div>
-
-  <div class="field">
-    <%= f.label :about  %>
-    <%= f.text_area :about, :size => "30x2" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
-  </div>
-
-  <%= f.submit "投稿する" %>
-<% end %>
-</div>
-<%= link_to "一覧に戻る", losts_path %>
+</body>
+</html>

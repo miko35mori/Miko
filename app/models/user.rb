@@ -13,9 +13,10 @@ class User < ApplicationRecord
          has_many :comments, dependent: :destroy
          has_many :messages, dependent: :destroy
 
+   
    def already_liked?(lost)
-      self.likes.exists?(lost_id: lost.id)
-   end
+      lost.present? && lost.likes.exists?(lost_id: lost.id)
+    end
 
    def already_favorited?(group)
       self.favorites.exists?(group_id: group.id)
